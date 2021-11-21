@@ -69,8 +69,9 @@ exports.signin = (req, res) => {
       })
     } else {
       const authToken = generateAuthToken()
-      authTokens[authToken] = data
       req.session.AuthToken = authToken
+      req.session.userEmail = data.email
+      req.session.userName = data.name
       res.redirect('/videos')
     }
   })
