@@ -1,0 +1,26 @@
+<div class='player-video' style='text-align: center'>
+<video id="video" width='80%' controls ></video>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <script>
+        const video = document.getElementById('video');
+        const videoSrc = '/videos/{{video.filename}}';
+        if (Hls.isSupported()) {
+           var config = {
+             debug: true,
+             liveSyncDurationCount: 3
+           };
+           const hls = new Hls(config);
+           hls.loadSource(videoSrc);
+           hls.attachMedia(video);
+           hls.on(Hls.Events.MANIFEST_PARSED, () => {
+               video.play();
+           });
+        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+              video.src = videoSrc;
+              video.addEventListener('loadedmetadata', () => {
+                   video.play();                                                                           
+              });
+        }
+
+   </script>
+  </div>

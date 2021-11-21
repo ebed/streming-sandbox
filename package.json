@@ -1,0 +1,42 @@
+{
+  "name": "streaming_app",
+  "version": "1.0.0",
+  "description": "Node.js on Docker",
+  "author": "Rodrigo Merino <rodrigo.merino@gmail.com>",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js --exec babel-node --presets babel-preset-env",
+    "lint": "eslint src/js"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "bootstrap": "^5.1.3",
+    "cookie-parser": "^1.4.6",
+    "cookie-session": "^1.4.0",
+    "cors": "^2.8.5",
+    "express": "^4.16.1",
+    "express-handlebars": "^6.0.1",
+    "express-session": "^1.17.2",
+    "hbs": "^4.2.0",
+    "hls-server": "^1.5.0",
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.15",
+    "passport": "^0.5.0",
+    "passport-local": "^1.0.0",
+    "pug": "^3.0.2"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.2.3",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-es2015": "^6.24.1",
+    "ember-template-lint": "^3.13.0",
+    "eslint": "^7.32.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.1"
+  }
+}

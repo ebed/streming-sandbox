@@ -1,0 +1,54 @@
+
+<div id="carouselExampleSlidesOnly" class="carousel slide mt-2 mb-5" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="https://placeimg.com/640/150/nature" class="d-block w-100" alt="...">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>Próximamente</h5>
+          <p>Prepara tus sentidos para lo último en deportes extremos.</p>
+      </div>
+   </div>
+   <div class="carousel-item">
+    <img src="https://placeimg.com/640/150/nature/" class="d-block w-100" alt="...">
+    <div class="carousel-caption d-none d-md-block">
+   <h5>5 de enero</h5>
+   <p>Nuevos canales de discovery disponibles.</p>
+   </div>
+   </div>
+   <div class="carousel-item">
+   <img src="https://placeimg.com/640/150/nature" class="d-block w-100" alt="...">
+   <div class="carousel-caption d-none d-md-block">
+   <h5>Animación para adultos</h5>
+   <p>Quien dijo que los dibujos animados son para niños, lo ultimo de adult swim disponible
+   .</p>
+   </div>
+   </div>
+   </div>
+</div>
+
+<div class='container'>
+<h1>Catálogo</h1>
+<div class="container">
+
+{{#each videos}}
+
+<div class="card video-card">
+    <img src="{{urlthumb}}" class="card-image-top">
+    <div class="card-body">
+        <h5 class="card-title">
+            {{name}}
+        </h5>
+
+        <p>
+            {{description}}
+        </p>
+        <div class="card-footer">
+          <a href='player?id={{id}}'>Ver</a>
+          </div>
+
+    </div>
+{{/each}}
+
+</div>
+</div>
+
