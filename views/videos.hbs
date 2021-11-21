@@ -1,34 +1,25 @@
 
+
 <div id="carouselExampleSlidesOnly" class="carousel slide mt-2 mb-5" data-bs-ride="carousel">
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img src="https://placeimg.com/640/150/nature" class="d-block w-100" alt="...">
-      <div class="carousel-caption d-none d-md-block">
-        <h5>Próximamente</h5>
-          <p>Prepara tus sentidos para lo último en deportes extremos.</p>
+  <div class="carousel-inner"> 
+    
+   <div class="carousel-item active">
+      <img src="https://www.biobiochile.cl/assets/logos-notas-patrocinadas/4695043_logo_img_patrocinada.png" height="400" class="d-block w-100" alt="...">
+    </div>
+    {{#each carousels}}
+   <div class="carousel-item">
+      <img src="{{image_url}}" height="400" class="d-block w-100" alt="...">
+      <div class="carousel-caption d-none d-md-block" style='background-color: #0A0A0A68'>
+        <h3 style='color: white ; font-size:  2rem; font-weight: bold'>{{title}}</h3>
+        <p style='color: white; font-size: 1rem; font-weight: bold'>{{description}}</p>
       </div>
-   </div>
-   <div class="carousel-item">
-    <img src="https://placeimg.com/640/150/nature/" class="d-block w-100" alt="...">
-    <div class="carousel-caption d-none d-md-block">
-   <h5>5 de enero</h5>
-   <p>Nuevos canales de discovery disponibles.</p>
-   </div>
-   </div>
-   <div class="carousel-item">
-   <img src="https://placeimg.com/640/150/nature" class="d-block w-100" alt="...">
-   <div class="carousel-caption d-none d-md-block">
-   <h5>Animación para adultos</h5>
-   <p>Quien dijo que los dibujos animados son para niños, lo ultimo de adult swim disponible
-   .</p>
-   </div>
-   </div>
+    </div>
+   {{/each}}
    </div>
 </div>
 
 <div class='container'>
 <h1>Catálogo</h1>
-<div class="container">
 
 {{#each videos}}
 
@@ -49,6 +40,5 @@
     </div>
 {{/each}}
 
-</div>
 </div>
 

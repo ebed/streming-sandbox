@@ -4,6 +4,7 @@ const Video = function (video) {
   this.name = video.name
   this.filename = video.filename
   this.urlthumb = video.urlthumb
+  this.description = video.description
 }
 
 Video.create = (newVideo, result) => {
@@ -25,7 +26,7 @@ Video.find = (id, result) => {
       result(null, err)
       return
     }
-    console.log('Video recuperado', res[0])
+    console.log('Video recuperado')
     result(null, res[0])
   })
 }
@@ -41,7 +42,7 @@ Video.list = (name, result) => {
       result(null, err)
       return
     }
-    console.log('Videos recuperados', res)
+    console.log('Videos recuperados')
     result(null, res)
   })
 }

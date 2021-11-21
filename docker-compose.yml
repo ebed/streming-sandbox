@@ -19,7 +19,7 @@ services:
       context: .
       dockerfile: Dockerfile
     volumes:
-      - .:/app/
+      - .:/app
     tmpfs:
       - /tmp
     depends_on:
