@@ -34,16 +34,19 @@ app.use(cookieParser())
 
 app.use(cookieSession({
   name: 'session',
-  keys: ['AuthToken']
+  keys: ['AuthToken',  'userEmail', 'userName']
 }))
 
 app.use(express.json())
+app.get('/', function (req, res) {
+  res.redirect('videos')
+})
+
 require('./routes/user.routes')(app)
 require('./routes/account.routes')(app)
 require('./routes/authentication.routes')(app)
 const server = app.listen(PORT, HOST)
 console.log(`Running on http://${HOST}:${PORT}`)
-
 new hls(server, {
   provider: {
     exists: (req, cb) => {
