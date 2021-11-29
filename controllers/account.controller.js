@@ -26,6 +26,7 @@ exports.estadistics = (req, res) => {
 }
 
 exports.player = (req, res) => {
+  console.log(req.id);
   const idVideo = req.query.id
   const ses = req.session
   Videos.find(idVideo, (err, result) => {

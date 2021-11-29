@@ -3,7 +3,7 @@
 const express = require('express')
 const app = express()
 const fs = require('fs')
-const hls = require('hls-server')
+const HLS = require('hls-server')
 const cors = require('cors')
 const path = require('path')
 const cookieParser = require('cookie-parser')
@@ -34,7 +34,7 @@ app.use(cookieParser())
 
 app.use(cookieSession({
   name: 'session',
-  keys: ['AuthToken',  'userEmail', 'userName']
+  keys: ['AuthToken', 'userEmail', 'userName']
 }))
 
 app.use(express.json())
@@ -47,7 +47,8 @@ require('./routes/account.routes')(app)
 require('./routes/authentication.routes')(app)
 const server = app.listen(PORT, HOST)
 console.log(`Running on http://${HOST}:${PORT}`)
-new hls(server, {
+
+const hlsServer = new HLS(server, {
   provider: {
     exists: (req, cb) => {
       const ext = req.url.split('.').pop()

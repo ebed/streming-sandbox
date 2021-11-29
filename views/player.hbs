@@ -3,19 +3,26 @@
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <script>
         const video = document.getElementById('video');
-        const videoSrc = '/videos/{{video.filename}}';
+        const videoSrc = '/media/{{video.filename}}';
+        console.log(videoSrc);
         if (Hls.isSupported()) {
            var config = {
              debug: true,
              liveSyncDurationCount: 3
            };
            const hls = new Hls(config);
-           hls.loadSource(videoSrc);
            hls.attachMedia(video);
-           hls.on(Hls.Events.MANIFEST_PARSED, () => {
-               video.play();
-           });
-        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+           hls.on(Hls.Events.MEDIA_ATTACHED, function () {
+             console.log("VIDEO element and HLS are attached");
+             hls.loadSource(videoSrc);
+             hls.on(Hls.Events.MANIFEST_PARSED,function(event, data) {
+                console.log('Manifiest loaded, found ' + data.levels.length + ' quality level')
+                video.play();
+             });
+           })
+
+        } 
+              else if (video.canPlayType('application/vnd.apple.mpegurl')) {
               video.src = videoSrc;
               video.addEventListener('loadedmetadata', () => {
                    video.play();                                                                           
