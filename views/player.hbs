@@ -27,8 +27,8 @@
     var video = document.getElementById('video');
     var hls = new Hls();
     // bind them together
-    var  url = 'http://localhost:8085/stream?video_id=1'
-    hls.loadSource(url);
+     
+    hls.loadSource('{{url}}={{video.id}}');
     hls.attachMedia(video);
   
     hls.on(Hls.Events.MEDIA_ATTACHED, function () {
@@ -38,8 +38,6 @@
          
        });
         
-
-       
     }); 
     video.play(); 
     }

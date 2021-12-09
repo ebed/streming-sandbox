@@ -21,13 +21,13 @@ exports.up = function(db) {
     id: { type: 'int', primaryKey: true, unique: true, autoIncrement: true },
     video_id: { type: 'int' },
     user_id: { type: 'string' },
-    started: { type: 'long' } 
+    started: { type: 'long' },
+    segments: { type: 'int' }
   })
 };
 
 exports.down = function(db) {
   return db.dropTable('sessions')
- 
 };
 
 exports._meta = {

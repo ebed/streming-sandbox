@@ -1,23 +1,25 @@
 const VideoOptions = require('../models/videos_options.js')
 const Session = require('../models/sessions.model')
-const session = require('express-session')
-const { get } = require('prompt')
- 
-
 
 const currentPlaylist = function (user, videoId, quality) {
   return new Promise((resolve, reject) => {
     getSession(user, videoId)
       .then((data) => {
-        console.log(data)
+        const pos = getPosition(data.started)
+        if (data.segments) {
+          if (pos > data.segments){
+            destroySession(user, videoId)
+          }
+        }
         VideoOptions.list(videoId, quality, (err, result) => {
           if (err) {
             reject(err)
-          }  
-          console.log(result[0])
-          const pos = getPosition(data.started)
-          console.log(pos)
-          resolve(generate(result[0], pos,  data.started))
+          }   
+          
+          if (!data.segments) {
+            updateSession(data, result[0])
+          }         
+          resolve(generate(result[0], pos,  data.started, user))      
         })
       })
       .catch((err) => {
@@ -33,7 +35,7 @@ function  getSession(user, videoId) {
         reject(err)
       }
       if  (sesionData) {        
-        console.log("SI HAY SESSION") 
+        console.log("SI EXISTE SESSION") 
         resolve(sesionData)
       } else {
         console.log("Crear session")
@@ -53,9 +55,7 @@ function generateSesion(user, videoId) {
     Session.create(session, (err, sessionCreated) => {
       if (err) {
         reject(err)
-      } else {
-          console.log("CHECK SESION")
-          console.log(sessionCreated)
+      } else { 
           resolve(sessionCreated)
         }
       })
@@ -63,10 +63,29 @@ function generateSesion(user, videoId) {
 }
 
 
-function generate(videoInfo, position, started) { 
-  console.log(position)
+function updateSession(session, videoInfo) {
+  session.segments = videoInfo.segments
+  Session.update(session, (err, sessionUpdated)  => {
+    if (err) {
+      console.log(err)
+      return
+    } else { 
+        console.log(sessionUpdated)
+        return
+      }
+    })
+  }
+
+function destroySession(user, videoId) {
+  Session.destroy(user, videoId, (err, data) => {
+    console.log(data)
+  })
+}
+
+
+function generate(videoInfo, position, started, user) {  
   let m3u8 = header(videoInfo.segment_duration, position, started)
-  m3u8 += segments(videoInfo.segment_duration, position, videoInfo.segment_name, videoInfo.segments)
+  m3u8 += segments(videoInfo.segment_duration, position, videoInfo.segment_name, videoInfo.segments, user, videoInfo.id)
   return m3u8
 }
  
@@ -81,7 +100,7 @@ function header  (duration, position, started) {
 }
 
 
-function segments  (duration, position, segmentName, q_segments) {
+function segments  (duration, position, segmentName, q_segments, user, videoId) {
   console.log(q_segments)
   const segUnit = '#EXTINF:' + duration + '.000000,'
   let resultSegment = ''
@@ -91,6 +110,8 @@ function segments  (duration, position, segmentName, q_segments) {
       resultSegment += segUnit + '\n' + '/rawvideos/' + segmentName + j + '.ts\n'
       if (j == q_segments) {
         resultSegment += '#EXT-X-ENDLIST'
+        console.log("Se termino el video")
+        destroySession(user, videoId)
       }
     }  
   }   
@@ -104,4 +125,5 @@ function getPosition(start_time) {
   console.log(temp_position)
   return temp_position
 }
+ 
 module.exports = currentPlaylist

@@ -38,9 +38,14 @@ exports.player = (req, res) => {
       console.error('Error', err)
       res.render('error')
     } else {
-      console.log(result)
-      const url =  'http://localhost:8085/stream?video_id=1&pos=1'
-      res.render('player', { video: result, ses: ses, url: url })
+      if (result) {  
+        const url =  'http://localhost:8085/stream?video_id'
+        res.render('player', { video: result, ses: ses, url: url })
+   
+      } else {
+        console.error('Error', err)
+        res.redirect('videos')
+      }
     }
   })
 }
