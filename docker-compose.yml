@@ -6,8 +6,9 @@ services:
     container_name: production_nginx
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf.template
+      - ./media:/www/static/rawvideos
     ports:
-      - 80:80
+      - 8085:80
       - 443:443
   stream_db:
     image: mysql
