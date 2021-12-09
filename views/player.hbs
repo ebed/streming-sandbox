@@ -1,33 +1,51 @@
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+<script>
+  if (Hls.isSupported()) {
+          console.log('hello hls.js!');
+
+    }
+</script>
 <div class='player-video' style='text-align: center'>
-<video id="video" width='80%' controls ></video>
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-    <script>
-        const video = document.getElementById('video');
-        const videoSrc = '/media/{{video.filename}}';
-        console.log(videoSrc);
-        if (Hls.isSupported()) {
-           var config = {
-             debug: true,
-             liveSyncDurationCount: 3
-           };
-           const hls = new Hls(config);
-           hls.attachMedia(video);
-           hls.on(Hls.Events.MEDIA_ATTACHED, function () {
-             console.log("VIDEO element and HLS are attached");
-             hls.loadSource(videoSrc);
-             hls.on(Hls.Events.MANIFEST_PARSED,function(event, data) {
-                console.log('Manifiest loaded, found ' + data.levels.length + ' quality level')
-                video.play();
-             });
-           })
+<video id="video" width="70%"   autoplay="" muted="" playsinline="" controls></video>
+<script>
 
-        } 
-              else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-              video.src = videoSrc;
-              video.addEventListener('loadedmetadata', () => {
-                   video.play();                                                                           
-              });
-        }
 
-   </script>
-  </div>
+  if (Hls.isSupported()) {
+  var config = {
+        autoStartLoad: true,
+        debug: false,
+        lowLatencyMode: true,
+        maxBufferLength: 30,
+        maxMaxBufferLength: 600, 
+        maxFragLookUpTolerance: 0.25,
+        liveSyncDuration: 1,
+        progressive: true
+       
+    }; 
+      
+    var hls = new Hls(config);
+    var video = document.getElementById('video');
+    var hls = new Hls();
+    // bind them together
+    var  url = 'http://localhost:8085/stream?video_id=1'
+    hls.loadSource(url);
+    hls.attachMedia(video);
+  
+    hls.on(Hls.Events.MEDIA_ATTACHED, function () {
+       console.log('video and hls.js are now bound together !');
+       hls.on(Hls.Events.MANIFEST_PARSED, function (event, data) {
+        console.log('manifest loaded, found ' + data.levels.length + ' quality level'            );
+         
+       });
+        
+
+       
+    }); 
+    video.play(); 
+    }
+</script>
+
+
+
+
+</div>

@@ -16,6 +16,7 @@ module.exports = app => {
 
   router.get('/videos', requireAuth, account.videos)
   router.get('/player', requireAuth, account.player)
+  router.get('/stream', requireAuth, account.stream)
   router.get('/estadisticas', requireAuth, account.estadistics)
   app.use('', router)
 }

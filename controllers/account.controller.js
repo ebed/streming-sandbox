@@ -1,5 +1,10 @@
+const fs = require('fs')
+
 const Videos = require('../models/videos.model')
+const currentPlaylist = require('../utils/playlist.js')
+
 const Carousel = require('../models/carousel.model.js')
+const { setFlagsFromString } = require('v8')
 exports.videos = (req, res, next) => {
   const ses = req.session
 
@@ -26,7 +31,6 @@ exports.estadistics = (req, res) => {
 }
 
 exports.player = (req, res) => {
-  console.log(req.id);
   const idVideo = req.query.id
   const ses = req.session
   Videos.find(idVideo, (err, result) => {
@@ -35,7 +39,26 @@ exports.player = (req, res) => {
       res.render('error')
     } else {
       console.log(result)
-      res.render('player', { video: result, ses: ses })
+      const url =  'http://localhost:8085/stream?video_id=1&pos=1'
+      res.render('player', { video: result, ses: ses, url: url })
     }
   })
+}
+
+exports.stream = (req, res) => {
+  console.log('streaming')
+  console.log(req.query)
+   
+  currentPlaylist(req.session.userEmail, req.query.video_id, '')
+    .then((data) => {
+      if (data) {
+        console.log(data)
+        res.send(data)
+      } else {
+        res.send('error')
+      }
+    })
+   
+   
+ 
 }
